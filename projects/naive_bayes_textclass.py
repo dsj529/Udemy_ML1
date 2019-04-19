@@ -14,12 +14,15 @@ from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics.classification import classification_report
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import MultinomialNB
 
 import numpy as np
-    
+
+
 TAG_MAP = defaultdict(lambda: wn.NOUN)
 TAG_MAP['J'] = wn.ADJ
 TAG_MAP['V'] = wn.VERB
@@ -54,8 +57,11 @@ model = MultinomialNB().fit(xTrainTfidf, trainingData.target)
 preds = model.predict(xTrainTfidf)
 print(confusion_matrix(trainingData.target, preds))
 print(accuracy_score(trainingData.target, preds))
+print(classification_report(trainingData.target, preds))
 
-new = ['This has nothing to do with church or religion', 'Software engineering is getting hotter and hotter nowadays']
+new = ['This has nothing to do with church or religion', 
+       'Software engineering is getting hotter and hotter nowadays']
+
 xNewCounts = countVectorizer.transform(new)
 xNewTfidf = tfidTransformer.transform(xNewCounts)
 
