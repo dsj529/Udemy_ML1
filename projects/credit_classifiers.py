@@ -3,6 +3,7 @@ Created on Apr 19, 2019
 
 @author: dsj529
 '''
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
@@ -25,8 +26,9 @@ feature_train, feature_test, target_train, target_test =\
     
 estimators = [GaussianNB(),
               LogisticRegression(solver='lbfgs'),
-              KNeighborsClassifier(n_neighbors=20)]
-names = ['Naive_Bayes', 'Logistic Regression', 'k-Neighbors Classifier']
+              KNeighborsClassifier(n_neighbors=20),
+              RandomForestClassifier(criterion='entropy', n_estimators=2500, max_features='sqrt')]
+names = ['Naive_Bayes', 'Logistic Regression', 'k-Neighbors Classifier', 'Random Forest']
 
 for clf, name in zip(estimators, names):
     model = clf.fit(feature_train, target_train)
@@ -34,4 +36,4 @@ for clf, name in zip(estimators, names):
     print('\nResults for {} model:'.format(name))
     print('{}'.format(confusion_matrix(target_test, preds)))
     print('{}'.format(classification_report(target_test, preds)))
-    print('\t Overall accuracy: {:.4%}'.format(accuracy_score(target_test, preds)))
+    print('Overall accuracy: {:.4%}'.format(accuracy_score(target_test, preds)))
